@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "898413100851",
+    "firebase_url": "https://hospmanagement-f049c.firebaseio.com",
+    "project_id": "hospmanagement-f049c",
+    "storage_bucket": "hospmanagement-f049c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898413100851:android:79e0fb5041a2417a",
+        "android_client_info": {
+          "package_name": "com.example.managorgan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898413100851-uoh88j2i9haeusmslu97iroaksj1638t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACnJ8K7GCFgBJB1ANpdT2FJUaPvyj1nzY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
