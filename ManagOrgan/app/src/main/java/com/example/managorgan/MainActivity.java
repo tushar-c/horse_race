@@ -18,53 +18,48 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView greet_text;
-    Button name_button;
-    EditText name_input;
+    TextView text_display;
+    EditText text_input;
+    Button update_button;
+    FirebaseDatabase firebase_db;
+    String display_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name_button = findViewById(R.id.nameButton);
-        greet_text = findViewById(R.id.MainTextView);
-        name_input = findViewById(R.id.editText);
 
-        final DatabaseReference firebase_db = FirebaseDatabase.getInstance().getReference();
-        firebase_db.child("niggz").setValue("Welcome");
-        firebase_db.addListenerForSingleValueEvent(new ValueEventListener() {
+        text_display = findViewById(R.id.MainTextView);
+        text_input = findViewById(R.id.editText);
+        update_button = findViewById(R.id.nameButton);
+
+        firebase_db = FirebaseDatabase.getInstance();
+        final DatabaseReference firebase_db_ref = firebase_db.getReference();
+
+        update_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onClick(View v) {
+                display_text = text_input.getText().toString();
+                firebase_db_ref.child("chigga").setValue(display_text);
+                text_display.setText(display_text);
+                Toast.makeText(MainActivity.this, "sent data", Toast.LENGTH_LONG).show();
 
-                greet_text.setText(dataSnapshot.child("niggz").getValue().toString());
-            }
+                firebase_db_ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String data = dataSnapshot.child("chigga").getValue().toString() + "z";
+                        text_display.setText(data);
+                        Toast.makeText(MainActivity.this, "got data", Toast.LENGTH_LONG).show();
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
         });
-    name_button.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            final String paad = firebase_db.push().getKey();
-            firebase_db.child("user").child(paad).child("name").setValue(name_input.getText().toString());
-
-            firebase_db.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    greet_text.setText(dataSnapshot.child("user").child(paad).child("name").getValue().toString());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            Toast.makeText(MainActivity.this, "Data added and Text updated Successfully", Toast.LENGTH_SHORT).show();
-        }
-    });
 
     }
 }
